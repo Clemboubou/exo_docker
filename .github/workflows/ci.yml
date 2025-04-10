@@ -19,3 +19,11 @@ jobs:
 
     - name: Run tests inside Docker image
       run: docker run --rm myapp-ci:${{ github.sha }} pytest
+
+    # Étape de construction de l'image Docker Stable
+    - name: Build Docker Stable image
+      run: docker build -t dfs-antoine.stagiairesmns.fr:5001/myapp-ci:stable .
+
+    # Envoi de l’image sur le registre privé
+    - name: Push Image on Registry
+      run: docker push dfs-antoine.stagiairesmns.fr:5001/myapp-ci:stable
