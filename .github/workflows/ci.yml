@@ -23,16 +23,11 @@ jobs:
     # Étape de construction de l'image Docker Stable
     - name: Build Docker Stable image
       run: docker build -t dfs-antoine.stagiairesmns.fr:5001/myapp-ci:stable .
-    - name: login docker
-      run: echo $DOCKER_PASSWORD | docker login https://$DOCKER_REGISTRY_URL/v2/ -u $DOCKER_USERNAME --password-stdin
-      continue-on-error: true
-    - name: login docker
-      run: echo $DOCKER_PASSWORD | docker login https://$DOCKER_REGISTRY_URL/v2/ -u $DOCKER_USERNAME --password-stdin
-      continue-on-error: true
-    - name: login docker
-      run: echo $DOCKER_PASSWORD | docker login https://$DOCKER_REGISTRY_URL/v2/ -u $DOCKER_USERNAME --password-stdin
-      continue-on-error: true
 
-    # Envoi de l’image sur le registre privé
+    # Docker login step
+    - name: Login to Docker registry
+      run: echo $DOCKER_PASSWORD | docker login $DOCKER_REGISTRY_URL -u $DOCKER_USERNAME --password-stdin
+
+    # Push Image to Registry
     - name: Push Image on Registry
       run: docker push dfs-antoine.stagiairesmns.fr:5001/myapp-ci:stable
